@@ -21,5 +21,10 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
+    'import/prefer-default-export': 'off',
+		'import/extensions': ['off'],
+    'linebreak-style': 0,
   },
+  extends: ['airbnb', 'prettier'],
+
 };
