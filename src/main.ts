@@ -5,6 +5,13 @@ import { ValidationPipe } from '@nestjs/common';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+    //Global Middleware 설정 -> Cors 속성 활성화
+    app.enableCors({
+      origin: '*',
+      methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+      optionsSuccessStatus: 200,
+    });
+
   app.useGlobalPipes(
     new ValidationPipe({
       /**

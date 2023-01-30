@@ -6,7 +6,7 @@ import {
     CreateDateColumn,
     UpdateDateColumn,
     DeleteDateColumn,
-    Unique,
+  Unique,
 } from 'typeorm';
   
   @Entity({ name: 'user' })
@@ -38,4 +38,4 @@ import {
   
     @DeleteDateColumn({ name: 'delete_at', comment: '삭제일' })
     deletedAt?: Date | null;
-  }
+}
