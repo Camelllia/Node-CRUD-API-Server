@@ -9,12 +9,12 @@ export class UserController {
 
   @Get('/user_all')
   getAllUser(): Promise<User[]> {
-    console.log(this.userService.getAllUser());
     return this.userService.getAllUser();
   }
 
   @Post('/createUser')
   onCreateUser(@Body() createUserDto: CreateUserDto): Promise<boolean> {
+    console.log(createUserDto);
     return this.userService.onCreateUser(createUserDto);
   }
 }

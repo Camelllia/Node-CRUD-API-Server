@@ -10,8 +10,7 @@ export class UserRepository extends Repository<User> {
     }
 
     async findAll(): Promise<User[]> {
-        const result = await this.find();
-        return result;
+        return await this.find();
     }
 
     async onCreate(createUserDto: CreateUserDto): Promise<boolean> {
