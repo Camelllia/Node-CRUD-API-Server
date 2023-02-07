@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, ParseIntPipe, UsePipes, ValidationPipe, ParseUUIDPipe } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './entity/user.entity';
 import { UserService } from './user.service';
@@ -12,9 +12,14 @@ export class UserController {
     return this.userService.getAllUser();
   }
 
+  @Get('/user/:id')
+  findByUserId(@Param('id', ParseUUIDPipe) id: string): Promise<User> {
+    return this.userService.findByUserId(id);
+  }
+
   @Post('/createUser')
+  @UsePipes(ValidationPipe)
   onCreateUser(@Body() createUserDto: CreateUserDto): Promise<boolean> {
-    console.log(createUserDto);
     return this.userService.onCreateUser(createUserDto);
   }
 }

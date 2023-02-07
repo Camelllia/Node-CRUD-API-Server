@@ -13,7 +13,11 @@ export class UserService {
     return this.userRepository.findAll();
   }
 
-  onCreateUser(createUserDto: CreateUserDto): Promise<boolean> {
+  async findByUserId(id: string): Promise<User> {
+    return this.userRepository.findById(id);
+  }
+
+  async onCreateUser(createUserDto: CreateUserDto): Promise<boolean> {
     return this.userRepository.onCreate(createUserDto);
   }
 }
