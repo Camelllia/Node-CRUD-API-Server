@@ -9,6 +9,7 @@ export class UserController {
 
   @Get('/user_all')
   getAllUser(): Promise<User[]> {
+    console.log(this.userService.getAllUser());
     return this.userService.getAllUser();
   }
 
