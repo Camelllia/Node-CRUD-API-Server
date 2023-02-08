@@ -1,5 +1,6 @@
-import { Controller, Get, Post, Body, Param, ParseIntPipe, UsePipes, ValidationPipe, ParseUUIDPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, UsePipes, ValidationPipe, ParseUUIDPipe, Patch } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user-dto';
 import { User } from './entity/user.entity';
 import { UserService } from './user.service';
 
@@ -21,5 +22,11 @@ export class UserController {
   @UsePipes(ValidationPipe)
   onCreateUser(@Body() createUserDto: CreateUserDto): Promise<boolean> {
     return this.userService.onCreateUser(createUserDto);
+  }
+
+  @Patch('/user/update/:id')
+  @UsePipes(ValidationPipe)
+  onUpdateUser(@Param('id', ParseUUIDPipe) id: string, @Body() updateUserDto:UpdateUserDto): Promise<Boolean> {
+    return this.userService.onChangeUser(id, updateUserDto);
   }
 }

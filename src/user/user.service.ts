@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user-dto';
 import { User } from './entity/user.entity';
 import { UserRepository } from './repository/user.repository';
 
@@ -19,5 +20,9 @@ export class UserService {
 
   async onCreateUser(createUserDto: CreateUserDto): Promise<boolean> {
     return this.userRepository.onCreate(createUserDto);
+  }
+
+  async onChangeUser(id: string, updateUserDto: UpdateUserDto): Promise<Boolean> {
+    return this.userRepository.onChanageUser(id, updateUserDto);
   }
 }

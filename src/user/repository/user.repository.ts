@@ -2,6 +2,7 @@ import { NotFoundException } from '@nestjs/common';
 import { Injectable } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
 import { CreateUserDto } from '../dto/create-user.dto';
+import { UpdateUserDto } from '../dto/update-user-dto';
 import { User } from '../entity/user.entity';
 
 @Injectable()
@@ -19,7 +20,7 @@ export class UserRepository extends Repository<User> {
         const user = await this.findOne({where: {id : id}});
 
         if (!user) {
-        throw new NotFoundException('유저를 찾을 수 없습니다.');
+            throw new NotFoundException('유저를 찾을 수 없습니다.');
         }
 
         return user;
@@ -37,5 +38,16 @@ export class UserRepository extends Repository<User> {
         });
 
         return user ? true : false;
+    }
+
+    async onChanageUser(id: string, updateUserDto: UpdateUserDto) : Promise<Boolean> {
+        const { name, age } = updateUserDto;
+        const changeUser = await this.update( {id}, { name, age });
+
+        if(changeUser.affected !== 1) {
+            throw new NotFoundException('유저를 찾을 수 없습니다.');
+        }
+
+        return true;
     }
 }
