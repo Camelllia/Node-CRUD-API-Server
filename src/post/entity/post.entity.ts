@@ -6,7 +6,7 @@ import {
     JoinColumn,
     ManyToOne,
     CreateDateColumn,
-  Unique,
+    Unique,
 } from 'typeorm';
 import { User } from 'src/user/entity/user.entity';
   
