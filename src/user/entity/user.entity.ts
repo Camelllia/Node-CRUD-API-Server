@@ -7,7 +7,10 @@ import {
     UpdateDateColumn,
     DeleteDateColumn,
   Unique,
+  OneToMany
 } from 'typeorm';
+
+import { Post } from 'src/post/entity/post.entity';
   
   @Entity({ name: 'user' })
   @Unique(['user_id'])
@@ -29,6 +32,11 @@ import {
   
     @Column({ type: 'tinyint', comment: '유저 나이' })
     age: number;
+
+    @OneToMany(type => Post, post => post.user, {
+      cascade: true
+    })
+    posts: Post[];
   
     @CreateDateColumn({ name: 'create_at', comment: '생성일' })
     createdAt: Date;
