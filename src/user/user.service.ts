@@ -25,4 +25,8 @@ export class UserService {
   async onChangeUser(id: string, updateUserDto: UpdateUserDto): Promise<Boolean> {
     return this.userRepository.onChanageUser(id, updateUserDto);
   }
+
+  async onDeleteUser(id: string): Promise<Boolean> {
+    return this.userRepository.onDeleteUser(id);
+  }
 }

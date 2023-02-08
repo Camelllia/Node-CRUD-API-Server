@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, UsePipes, ValidationPipe, ParseUUIDPipe, Patch } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, UsePipes, ValidationPipe, ParseUUIDPipe, Patch, Delete } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user-dto';
 import { User } from './entity/user.entity';
@@ -28,5 +28,10 @@ export class UserController {
   @UsePipes(ValidationPipe)
   onUpdateUser(@Param('id', ParseUUIDPipe) id: string, @Body() updateUserDto:UpdateUserDto): Promise<Boolean> {
     return this.userService.onChangeUser(id, updateUserDto);
+  }
+
+  @Delete('/user/delete/:id')
+  onDeleteUser(@Param('id', ParseUUIDPipe) id: string) {
+    return this.userService.onDeleteUser(id);
   }
 }

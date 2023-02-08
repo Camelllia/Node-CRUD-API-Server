@@ -40,11 +40,21 @@ export class UserRepository extends Repository<User> {
         return user ? true : false;
     }
 
-    async onChanageUser(id: string, updateUserDto: UpdateUserDto) : Promise<Boolean> {
+    async onChanageUser(id: string, updateUserDto: UpdateUserDto): Promise<Boolean> {
         const { name, age } = updateUserDto;
         const changeUser = await this.update( {id}, { name, age });
 
         if(changeUser.affected !== 1) {
+            throw new NotFoundException('유저를 찾을 수 없습니다.');
+        }
+
+        return true;
+    }
+
+    async onDeleteUser(id: string): Promise<Boolean> {
+        const deleteUser = await this.delete(id);
+
+        if(deleteUser.affected !== 1) {
             throw new NotFoundException('유저를 찾을 수 없습니다.');
         }
 
