@@ -1,10 +1,21 @@
-import { Controller, Get, Post, Body, Param, UsePipes, ValidationPipe, ParseUUIDPipe, Patch, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  UsePipes,
+  ValidationPipe,
+  ParseUUIDPipe,
+  Patch,
+  Delete,
+} from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user-dto';
 import { User } from './entity/user.entity';
 import { UserService } from './user.service';
 
-@Controller('user')
+@Controller('')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
@@ -26,7 +37,10 @@ export class UserController {
 
   @Patch('/user/update/:id')
   @UsePipes(ValidationPipe)
-  onUpdateUser(@Param('id', ParseUUIDPipe) id: string, @Body() updateUserDto:UpdateUserDto): Promise<Boolean> {
+  onUpdateUser(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() updateUserDto: UpdateUserDto,
+  ): Promise<Boolean> {
     return this.userService.onChangeUser(id, updateUserDto);
   }
 

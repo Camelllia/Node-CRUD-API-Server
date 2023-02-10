@@ -17,6 +17,14 @@ export class PostService {
     return this.postRepository.findAll();
   }
 
+  async findByPostId(id: number): Promise<Post> {
+    return this.postRepository.findByPostId(id);
+  }
+
+  async findByUserId(uuid: string): Promise<Post[]> {
+    return this.postRepository.findByUserId(uuid);
+  }
+
   async onCreatePost(createPostDto: CreatePostDto): Promise<Boolean> {
     const createUser = await this.userRepository.findById(
       createPostDto.user_uuid,

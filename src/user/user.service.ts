@@ -6,9 +6,7 @@ import { UserRepository } from './repository/user.repository';
 
 @Injectable()
 export class UserService {
-  constructor(
-    private userRepository: UserRepository,
-  ) {}
+  constructor(private userRepository: UserRepository) {}
 
   async getAllUser(): Promise<User[]> {
     return this.userRepository.findAll();
@@ -22,8 +20,11 @@ export class UserService {
     return this.userRepository.onCreate(createUserDto);
   }
 
-  async onChangeUser(id: string, updateUserDto: UpdateUserDto): Promise<Boolean> {
-    return this.userRepository.onChanageUser(id, updateUserDto);
+  async onChangeUser(
+    id: string,
+    updateUserDto: UpdateUserDto,
+  ): Promise<Boolean> {
+    return this.userRepository.onChangeUser(id, updateUserDto);
   }
 
   async onDeleteUser(id: string): Promise<Boolean> {

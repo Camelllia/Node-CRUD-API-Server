@@ -17,13 +17,23 @@ import { PostService } from './post.service';
 import { UpdateUserDto } from '../user/dto/update-user-dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 
-@Controller('post')
+@Controller('')
 export class PostController {
   constructor(private readonly postService: PostService) {}
 
   @Get('/post_all')
   getAllUser(): Promise<Board[]> {
     return this.postService.getAllPost();
+  }
+
+  @Get('/post/:id')
+  findByPostId(@Param('id', ParseIntPipe) id: number): Promise<Board> {
+    return this.postService.findByPostId(id);
+  }
+
+  @Get('/post/user/:uuid')
+  findByUserId(@Param('uuid', ParseUUIDPipe) uuid: string): Promise<Board[]> {
+    return this.postService.findByUserId(uuid);
   }
 
   @Post('/createPost')

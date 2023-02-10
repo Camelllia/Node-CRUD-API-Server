@@ -3,7 +3,6 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { Post } from '../entity/post.entity';
 import { CreatePostDto } from '../dto/create-post.dto';
 import { User } from 'src/user/entity/user.entity';
-import { UpdateUserDto } from '../../user/dto/update-user-dto';
 import { UpdatePostDto } from '../dto/update-post.dto';
 
 @Injectable()
@@ -14,6 +13,18 @@ export class PostRepository extends Repository<Post> {
 
   async findAll(): Promise<Post[]> {
     return await this.find();
+  }
+
+  async findByPostId(id: number): Promise<Post> {
+    return this.createQueryBuilder('post')
+      .where('post.id = :id', { id: id })
+      .getOne();
+  }
+
+  async findByUserId(uuid: string): Promise<Post[]> {
+    return this.createQueryBuilder('post')
+      .where('post.user_uuid = :uuid', { uuid: uuid })
+      .getMany();
   }
 
   async onCreate(user: User, createPostDto: CreatePostDto): Promise<Boolean> {
