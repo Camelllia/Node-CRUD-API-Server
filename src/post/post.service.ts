@@ -4,6 +4,7 @@ import { Post } from './entity/post.entity';
 import { PostRepository } from './repository/post.repository';
 import { User } from 'src/user/entity/user.entity';
 import { UserRepository } from 'src/user/repository/user.repository';
+import { UpdatePostDto } from './dto/update-post.dto';
 
 @Injectable()
 export class PostService {
@@ -23,7 +24,14 @@ export class PostService {
     return this.postRepository.onCreate(createUser, createPostDto);
   }
 
-  async onDeletePost(id: string): Promise<boolean> {
+  async onChangePost(
+    id: number,
+    updatePostDto: UpdatePostDto,
+  ): Promise<Boolean> {
+    return this.postRepository.onChangePost(id, updatePostDto);
+  }
+
+  async onDeletePost(id: number): Promise<Boolean> {
     return this.postRepository.onDelete(id);
   }
 }

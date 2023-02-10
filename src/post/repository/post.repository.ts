@@ -3,6 +3,8 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { Post } from '../entity/post.entity';
 import { CreatePostDto } from '../dto/create-post.dto';
 import { User } from 'src/user/entity/user.entity';
+import { UpdateUserDto } from '../../user/dto/update-user-dto';
+import { UpdatePostDto } from '../dto/update-post.dto';
 
 @Injectable()
 export class PostRepository extends Repository<Post> {
@@ -14,7 +16,7 @@ export class PostRepository extends Repository<Post> {
     return await this.find();
   }
 
-  async onCreate(user: User, createPostDto: CreatePostDto): Promise<boolean> {
+  async onCreate(user: User, createPostDto: CreatePostDto): Promise<Boolean> {
     const { title, contents } = createPostDto;
 
     const post = await this.createQueryBuilder('post')
@@ -29,7 +31,21 @@ export class PostRepository extends Repository<Post> {
     return post ? true : false;
   }
 
-  async onDelete(id: string): Promise<boolean> {
+  async onChangePost(
+    id: number,
+    updatePostDto: UpdatePostDto,
+  ): Promise<Boolean> {
+    const { title, contents } = updatePostDto;
+    const changePost = await this.update({ id }, { title, contents });
+
+    if (changePost.affected !== 1) {
+      throw new NotFoundException('게시물을 찾을 수 없습니다.');
+    }
+
+    return true;
+  }
+
+  async onDelete(id: number): Promise<Boolean> {
     const deletePost = await this.delete(id);
 
     if (deletePost.affected !== 1) {
