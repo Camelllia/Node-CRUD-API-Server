@@ -35,7 +35,7 @@ export class UserRepository extends Repository<User> {
             salt: 'salt',
             name,
             age,
-        });
+        });                    
 
         return user ? true : false;
     }

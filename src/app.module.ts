@@ -1,6 +1,7 @@
 import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
+
 import { typeORMConfig } from './configs/typeorm.config';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthMiddleware } from './middleware/auth.middleware';
 import { PostController } from './post/post.controller';
 import { PostModule } from './post/post.module';
