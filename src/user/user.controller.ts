@@ -15,16 +15,16 @@ import { UpdateUserDto } from './dto/update-user-dto';
 import { User } from './entity/user.entity';
 import { UserService } from './user.service';
 
-@Controller('')
+@Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Get('/user_all')
+  @Get('/all')
   getAllUser(): Promise<User[]> {
     return this.userService.getAllUser();
   }
 
-  @Get('/user/:id')
+  @Get('/:id')
   findByUserId(@Param('id', ParseUUIDPipe) id: string): Promise<User> {
     return this.userService.findByUserId(id);
   }
@@ -35,7 +35,7 @@ export class UserController {
     return this.userService.onCreateUser(createUserDto);
   }
 
-  @Patch('/user/update/:id')
+  @Patch('/update/:id')
   @UsePipes(ValidationPipe)
   onUpdateUser(
     @Param('id', ParseUUIDPipe) id: string,
@@ -44,7 +44,7 @@ export class UserController {
     return this.userService.onChangeUser(id, updateUserDto);
   }
 
-  @Delete('/user/delete/:id')
+  @Delete('/delete/:id')
   onDeleteUser(@Param('id', ParseUUIDPipe) id: string) {
     return this.userService.onDeleteUser(id);
   }

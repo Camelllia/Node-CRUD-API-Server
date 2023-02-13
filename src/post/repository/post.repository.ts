@@ -39,7 +39,7 @@ export class PostRepository extends Repository<Post> {
       })
       .execute();
 
-    return post ? true : false;
+    return !!post;
   }
 
   async onChangePost(
