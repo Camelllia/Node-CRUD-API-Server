@@ -12,17 +12,19 @@ export class PostRepository extends Repository<Post> {
   }
 
   async findAll(): Promise<Post[]> {
-    return await this.find();
+    return await this.createQueryBuilder('post')
+      .leftJoinAndSelect('post.user', 'user')
+      .getMany();
   }
 
   async findByPostId(id: number): Promise<Post> {
-    return this.createQueryBuilder('post')
+    return await this.createQueryBuilder('post')
       .where('post.id = :id', { id: id })
       .getOne();
   }
 
   async findByUserId(uuid: string): Promise<Post[]> {
-    return this.createQueryBuilder('post')
+    return await this.createQueryBuilder('post')
       .where('post.user_uuid = :uuid', { uuid: uuid })
       .getMany();
   }
