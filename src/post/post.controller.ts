@@ -35,7 +35,7 @@ export class PostController {
     return this.postService.findByUserId(uuid);
   }
 
-  @Post('/createPost')
+  @Post('/create')
   @UsePipes(ValidationPipe)
   onCreatePost(@Body() createPostDto: CreatePostDto): Promise<Boolean> {
     return this.postService.onCreatePost(createPostDto);
@@ -50,7 +50,7 @@ export class PostController {
     return this.postService.onChangePost(id, updatePostDto);
   }
 
-  @Delete('/delete/:id')
+  @Patch('/delete/:id')
   onDeletePost(@Param('id', ParseIntPipe) id: number): Promise<Boolean> {
     return this.postService.onDeletePost(id);
   }

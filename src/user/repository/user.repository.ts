@@ -55,7 +55,9 @@ export class UserRepository extends Repository<User> {
   }
 
   async onDeleteUser(id: string): Promise<Boolean> {
-    const deleteUser = await this.delete(id);
+    const delYn = true;
+    const deletedAt = new Date();
+    const deleteUser = await this.update(id, { delYn, deletedAt });
 
     if (deleteUser.affected !== 1) {
       throw new NotFoundException('유저를 찾을 수 없습니다.');

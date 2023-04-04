@@ -19,12 +19,14 @@ export class PostRepository extends Repository<Post> {
 
   async findByPostId(id: number): Promise<Post> {
     return await this.createQueryBuilder('post')
+      .leftJoinAndSelect('post.user', 'user')
       .where('post.id = :id', { id: id })
       .getOne();
   }
 
   async findByUserId(uuid: string): Promise<Post[]> {
     return await this.createQueryBuilder('post')
+      .leftJoinAndSelect('post.user', 'user')
       .where('post.user_uuid = :uuid', { uuid: uuid })
       .getMany();
   }
@@ -59,7 +61,9 @@ export class PostRepository extends Repository<Post> {
   }
 
   async onDelete(id: number): Promise<Boolean> {
-    const deletePost = await this.delete(id);
+    const delYn = true;
+    const deletedAt = new Date();
+    const deletePost = await this.update(id, { delYn, deletedAt });
 
     if (deletePost.affected !== 1) {
       throw new NotFoundException('게시물을 찾을 수 없습니다.');

@@ -28,10 +28,11 @@ export class Post extends BaseEntity {
     name: 'user_uuid',
     referencedColumnName: 'id',
   })
-  @ManyToOne((type) => User, (user) => user.posts, {
-    onDelete: 'CASCADE',
-  })
+  @ManyToOne((type) => User, (user) => user.posts)
   user: User;
+
+  @Column({ type: 'boolean', default: false })
+  delYn: boolean;
 
   @CreateDateColumn({ name: 'create_at', comment: '생성일' })
   createdAt: Date;

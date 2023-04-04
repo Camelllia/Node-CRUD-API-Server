@@ -29,7 +29,7 @@ export class UserController {
     return this.userService.findByUserId(id);
   }
 
-  @Post('/createUser')
+  @Post('/create')
   @UsePipes(ValidationPipe)
   onCreateUser(@Body() createUserDto: CreateUserDto): Promise<boolean> {
     return this.userService.onCreateUser(createUserDto);
@@ -44,7 +44,7 @@ export class UserController {
     return this.userService.onChangeUser(id, updateUserDto);
   }
 
-  @Delete('/delete/:id')
+  @Patch('/delete/:id')
   onDeleteUser(@Param('id', ParseUUIDPipe) id: string) {
     return this.userService.onDeleteUser(id);
   }
