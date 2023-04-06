@@ -8,9 +8,11 @@ import {
   DeleteDateColumn,
   Unique,
   OneToMany,
+  BeforeInsert,
 } from 'typeorm';
 
 import { Post } from 'src/post/entity/post.entity';
+import * as bcrypt from 'bcrypt';
 
 @Entity({ name: 'user' })
 @Unique(['user_id'])

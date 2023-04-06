@@ -32,7 +32,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     }),
     TypeOrmModule.forRoot(typeORMConfig),
     UserModule,
-    PostModule
+    PostModule,
   ],
   controllers: [],
   providers: [],
@@ -41,8 +41,8 @@ export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(AuthMiddleware)
-      .exclude({ path: 'user/createUser', method: RequestMethod.POST })
-      .exclude({ path: 'user/login', method: RequestMethod.POST })
+      .exclude({ path: '/user/create', method: RequestMethod.POST })
+      .exclude({ path: '/user/login', method: RequestMethod.POST })
       .forRoutes(UserController);
   }
 }

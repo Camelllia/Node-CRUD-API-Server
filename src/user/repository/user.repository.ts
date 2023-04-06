@@ -1,9 +1,11 @@
 import { NotFoundException } from '@nestjs/common';
 import { Injectable } from '@nestjs/common';
-import { DataSource, Repository } from 'typeorm';
+import { BeforeInsert, DataSource, Repository } from 'typeorm';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user-dto';
 import { User } from '../entity/user.entity';
+import * as bcrypt from 'bcrypt';
+import { hash } from 'bcrypt';
 
 @Injectable()
 export class UserRepository extends Repository<User> {
@@ -32,7 +34,6 @@ export class UserRepository extends Repository<User> {
     const user = await this.save({
       user_id,
       password,
-      salt: 'salt',
       name,
       age,
     });

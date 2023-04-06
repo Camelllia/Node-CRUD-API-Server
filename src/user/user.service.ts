@@ -6,13 +6,14 @@ import { UserRepository } from './repository/user.repository';
 import { LoginUserDto } from './dto/login-user-dto';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
   constructor(
     private userRepository: UserRepository,
     private readonly jwtService: JwtService,
-    private readonly configService: ConfigService
+    private readonly configService: ConfigService,
   ) {}
 
   async getAllUser(): Promise<User[]> {
@@ -24,13 +25,14 @@ export class UserService {
   }
 
   async onCreateUser(createUserDto: CreateUserDto): Promise<boolean> {
+    createUserDto.password = await this.hashPassword(createUserDto.password);
     return this.userRepository.onCreate(createUserDto);
   }
 
   async onChangeUser(
     id: string,
     updateUserDto: UpdateUserDto,
-  ): Promise<Boolean> { 
+  ): Promise<Boolean> {
     return this.userRepository.onChangeUser(id, updateUserDto);
   }
 
@@ -49,7 +51,7 @@ export class UserService {
     return {
       access_token: await this.jwtService.signAsync(payload, {
         expiresIn: '60m',
-        secret: this.configService.get<string>('JWT_SECRET')
+        secret: this.configService.get<string>('JWT_SECRET'),
       }),
     };
   }
@@ -62,5 +64,9 @@ export class UserService {
       return isValidUser;
     }
     return null;
+  }
+
+  async hashPassword(password: string) {
+    return await bcrypt.hash(password, 10);
   }
 }
