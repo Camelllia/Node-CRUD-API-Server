@@ -1,16 +1,20 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
+// import * as dotenv from 'dotenv';
 
 async function bootstrap() {
+  // dotenv.config();
+  console.log('start', process.env.JWT_SECRET)
   const app = await NestFactory.create(AppModule);
+  await app.listen(3000);
 
-    //Global Middleware 설정 -> Cors 속성 활성화
-    app.enableCors({
-      origin: '*',
-      methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-      optionsSuccessStatus: 200,
-    });
+  //Global Middleware 설정 -> Cors 속성 활성화
+  app.enableCors({
+    origin: '*',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    optionsSuccessStatus: 200,
+  });
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -27,7 +31,5 @@ async function bootstrap() {
       transform: true,
     }),
   );
-
-  await app.listen(3000);
 }
 bootstrap();

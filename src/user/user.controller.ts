@@ -8,12 +8,12 @@ import {
   ValidationPipe,
   ParseUUIDPipe,
   Patch,
-  Delete,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user-dto';
 import { User } from './entity/user.entity';
 import { UserService } from './user.service';
+import { LoginUserDto } from './dto/login-user-dto';
 
 @Controller('user')
 export class UserController {
@@ -25,7 +25,7 @@ export class UserController {
   }
 
   @Get('/:id')
-  findByUserId(@Param('id', ParseUUIDPipe) id: string): Promise<User> {
+  findByUserId(@Param('id') id: string): Promise<User> {
     return this.userService.findByUserId(id);
   }
 
@@ -47,5 +47,13 @@ export class UserController {
   @Patch('/delete/:id')
   onDeleteUser(@Param('id', ParseUUIDPipe) id: string) {
     return this.userService.onDeleteUser(id);
+  }
+
+  @Post('/login')
+  @UsePipes(ValidationPipe)
+  userLogin(
+    @Body() loginUserDto: LoginUserDto,
+  ): Promise<{ access_token: string }> {
+    return this.userService.login(loginUserDto);
   }
 }

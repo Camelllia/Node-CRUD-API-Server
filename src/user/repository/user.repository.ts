@@ -17,7 +17,7 @@ export class UserRepository extends Repository<User> {
 
   //단일 유저 조회
   async findById(id: string): Promise<User> {
-    const user = await this.findOne({ where: { id: id } });
+    const user = await this.findOne({ where: { user_id: id } });
 
     if (!user) {
       throw new NotFoundException('유저를 찾을 수 없습니다.');
