@@ -22,6 +22,7 @@ export class AuthMiddleware implements NestMiddleware {
       const token = req.headers['auth-token'];
       try {
         const decoded = this.jwtService.verify(token.toString());
+        console.log('decoded Token : {}', decoded);
       } catch {
         throw new UnauthorizedException('유효하지 않거나 만료된 토큰');
       }

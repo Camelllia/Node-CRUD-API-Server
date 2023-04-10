@@ -38,7 +38,7 @@ export class UserRepository extends Repository<User> {
       age,
     });
 
-    return user ? true : false;
+    return !!user;
   }
 
   async onChangeUser(
